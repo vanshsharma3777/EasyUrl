@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/lithammer/shortuuid/v4"
 	"github.com/vanshsharma3777/EasyUrl/internals/db"
@@ -12,14 +13,10 @@ import (
 	"github.com/vanshsharma3777/EasyUrl/models"
 )
 
-type CreateURLRequest struct {
-	Url string `json:"url"`
-}
-
 func Url(w http.ResponseWriter, r *http.Request) {
 	anonyousId := r.Context().Value(middleware.ContextAnonymousId).(string)
 
-	var requestUrl CreateURLRequest
+	var requestUrl models.CreateURLRequest
 
 	err := json.NewDecoder(r.Body).Decode(&requestUrl)
 
@@ -43,17 +40,23 @@ func Url(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	shortUrlCode := shortuuid.New()[:6]
-	shortUrl := "http//easyurl.com/v1/" + shortUrlCode
+	shortUrl := os.Getenv("DOMAIN_NAME") + shortUrlCode
 
 	if len(shortUrlCode)|len(shortUrl) == 0 {
 		http.Error(w, "Internal Server Error in creating the ShortCode for URL", http.StatusInternalServerError)
 		return
 	}
 
+	qrCode, ok := helper.CreateQR(shortUrl)
+
+	if ok == false {
+		http.Error(w, "Internal server error in Creating the QRcode", http.StatusInternalServerError)
+	}
+
 	url := models.URL{
 		OriginalUrl:     requestUrl.Url,
 		ShortUrl:        shortUrl,
-		QRCodeUrl:       "Currently not available",
+		QRCodeUrl:       qrCode,
 		UserAnonymousID: anonyousId,
 	}
 
@@ -68,7 +71,8 @@ func Url(w http.ResponseWriter, r *http.Request) {
 		"originalUrl": url.OriginalUrl,
 		"shortUrl":    url.ShortUrl,
 		"anonyousId":  url.UserAnonymousID,
-		"msg":         "SHort url created successfully",
+		"qrCode":      url.QRCodeUrl,
+		"msg":         "Short url created successfully",
 	}
 
 	w.Header().Set("Content-Type", "application/json")

@@ -13,7 +13,6 @@ func GetUrls(w http.ResponseWriter, r *http.Request) {
 	anonymousId := r.Context().Value(middleware.ContextAnonymousId).(string)
 
 	urls, ok := helper.GetAllUrls(anonymousId)
-	fmt.Printf("all urls %v", urls)
 	if ok == false {
 		errorMessage := "Internal Server Error"
 		err := json.NewEncoder(w).Encode(errorMessage)
