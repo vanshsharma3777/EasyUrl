@@ -24,6 +24,7 @@ func main() {
 
 	mux.HandleFunc("GET /api/test", middleware.Recover(middleware.Anonymous(api.Test)))
 	mux.HandleFunc("POST /api/v1/url", middleware.Recover(middleware.Anonymous(v1.Url)))
+	mux.HandleFunc("GET /api/v1/get-urls", middleware.Recover(middleware.Anonymous(v1.GetUrls)))
 
 	fmt.Println("Server is running on http://localhost:8080")
 	errs := http.ListenAndServe(":8080", mux)
