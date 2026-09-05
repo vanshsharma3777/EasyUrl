@@ -22,7 +22,7 @@ func main() {
 	db.Init(os.Getenv("DATABASE_URL"))
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("GET /api/test", middleware.Recover(middleware.Anonymous(api.Test)))
+	mux.HandleFunc("GET /", middleware.Recover(middleware.Anonymous(api.Test)))
 	mux.HandleFunc("POST /api/v1/url", middleware.Recover(middleware.Anonymous(v1.Url)))
 	mux.HandleFunc("GET /api/v1/get-urls", middleware.Recover(middleware.Anonymous(v1.GetUrls)))
 	mux.HandleFunc("GET /{shortCode}", middleware.Recover(v1.RedirectUrl))

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const api = axios.create({
-  baseURL: "http://localhost:8080/api/v1",
+  baseURL: "https://easyurl-vwct.onrender.com/",
 
   withCredentials: true,
 
@@ -19,11 +19,11 @@ export interface ShortenUrlResponse {
 }
 
 export const shortenUrl = async (longUrl: string): Promise<ShortenUrlResponse> => {
-  const response = await api.post<ShortenUrlResponse>('/url', { url: longUrl });
+  const response = await api.post<ShortenUrlResponse>('api/v1/url', { url: longUrl });
   return response.data;
 };
 
 export const getRecentUrls = async (): Promise<ShortenUrlResponse[]> => {
-  const response = await api.get<ShortenUrlResponse[]>('/get-urls');
+  const response = await api.get<ShortenUrlResponse[]>('api/v1/get-urls');
   return response.data;
 };
