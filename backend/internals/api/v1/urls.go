@@ -31,8 +31,10 @@ func Url(w http.ResponseWriter, r *http.Request) {
 	if ok == true {
 		w.Header().Set("Content-Type", "application/json")
 		fmt.Println("Came here exsiting url found")
+		fmt.Println("sending url after creation ", checkUrlExists)
+
 		w.WriteHeader(http.StatusAccepted)
-		json.NewEncoder(w).Encode(checkUrlExists)
+		err = json.NewEncoder(w).Encode(checkUrlExists)
 
 		if err != nil {
 			log.Println("failed to encode JSON response:", err)
@@ -42,7 +44,7 @@ func Url(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	shortUrlCode := shortuuid.New()[:6]
-	shortUrl := os.Getenv("DEPLOYMENT_DOMAIN_NAME") + shortUrlCode
+	shortUrl := os.Getenv("SHORTURLHOST") + shortUrlCode
 	fmt.Print("shorturl ", shortUrl)
 	if len(shortUrlCode)|len(shortUrl) == 0 {
 		http.Error(w, "Internal Server Error in creating the ShortCode for URL", http.StatusInternalServerError)
@@ -76,7 +78,7 @@ func Url(w http.ResponseWriter, r *http.Request) {
 		"QrCode":      url.QRCodeUrl,
 		"Msg":         "Short url created successfully",
 	}
-
+	fmt.Println("sending url after creation ", response)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusAccepted)
 	err = json.NewEncoder(w).Encode(response)

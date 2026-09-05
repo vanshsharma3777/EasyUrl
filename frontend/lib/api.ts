@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 export const api = axios.create({
-   baseURL: "https://easyurl-vwct.onrender.com/",
- // baseURL: "http://localhost:8080/",
+   //baseURL: "https://easyurl-vwct.onrender.com/",
+  baseURL: "http://localhost:8080/",
 
   withCredentials: true,
 
