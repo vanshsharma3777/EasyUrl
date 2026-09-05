@@ -20,6 +20,10 @@ func main() {
 	}
 
 	db.Init(os.Getenv("DATABASE_URL"))
+
+	if err := db.ConnectRedis(); err != nil {
+		log.Println(err)
+	}
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("GET /", middleware.Recover(middleware.Anonymous(api.Test)))

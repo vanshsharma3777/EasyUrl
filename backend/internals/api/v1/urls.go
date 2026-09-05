@@ -31,7 +31,6 @@ func Url(w http.ResponseWriter, r *http.Request) {
 	if ok == true {
 		w.Header().Set("Content-Type", "application/json")
 		fmt.Println("Came here exsiting url found")
-		fmt.Println("sending url after creation ", checkUrlExists)
 
 		w.WriteHeader(http.StatusAccepted)
 		err = json.NewEncoder(w).Encode(checkUrlExists)
@@ -78,7 +77,6 @@ func Url(w http.ResponseWriter, r *http.Request) {
 		"QrCode":      url.QRCodeUrl,
 		"Msg":         "Short url created successfully",
 	}
-	fmt.Println("sending url after creation ", response)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusAccepted)
 	err = json.NewEncoder(w).Encode(response)
