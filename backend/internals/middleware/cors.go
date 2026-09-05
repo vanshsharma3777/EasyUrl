@@ -7,7 +7,7 @@ func CORS(next http.Handler) http.Handler {
 
 		w.Header().Set(
 			"Access-Control-Allow-Origin",
-			"http://localhost:3001",
+			"https://easyurl-lime.vercel.app/",
 		)
 
 		w.Header().Set(
