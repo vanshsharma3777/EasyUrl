@@ -19,6 +19,7 @@ export default function RecentUrlsPage() {
     setError('');
     try {
       const data = await getRecentUrls();
+      console.log(data)
       setUrls(data);
     } catch (err: any) {
       setError(err.response?.data?.message || 'Failed to load URL history from server.');

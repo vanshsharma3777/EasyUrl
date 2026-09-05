@@ -22,6 +22,7 @@ export const UrlShortenerCard = () => {
 
     try {
       const data = await shortenUrl(inputUrl);
+      console.log("data" , data)
       setResult({
         shortUrl: data.ShortUrl,
         OriginalUrl: data.OriginalUrl,

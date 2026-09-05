@@ -42,8 +42,8 @@ func Url(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	shortUrlCode := shortuuid.New()[:6]
-	shortUrl := os.Getenv("DOMAIN_NAME") + shortUrlCode
-
+	shortUrl := os.Getenv("DEPLOYMENT_DOMAIN_NAME") + shortUrlCode
+	fmt.Print("shorturl ", shortUrl)
 	if len(shortUrlCode)|len(shortUrl) == 0 {
 		http.Error(w, "Internal Server Error in creating the ShortCode for URL", http.StatusInternalServerError)
 		return

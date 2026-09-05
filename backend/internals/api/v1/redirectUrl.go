@@ -13,10 +13,12 @@ func RedirectUrl(w http.ResponseWriter, r *http.Request) {
 	var shortCode string
 	shortCode = r.PathValue("shortCode")
 
-	shortUrl := os.Getenv("DOMAIN_NAME") + shortCode
+	shortUrl := os.Getenv("DEPLOYMENT_DOMAIN_NAME") + shortCode
+	fmt.Println("shortUrl", shortUrl)
 
 	var OriginalUrlData models.URL
 	result := db.DB.Where("short_url = ?", shortUrl).Find(&OriginalUrlData)
+	fmt.Println("result", result)
 
 	if result.Error != nil {
 		fmt.Println("error is \n", result.Error)
