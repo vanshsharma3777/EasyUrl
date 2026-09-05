@@ -7,6 +7,7 @@ import (
 
 	"github.com/vanshsharma3777/EasyUrl/internals/helper"
 	"github.com/vanshsharma3777/EasyUrl/internals/middleware"
+	"github.com/vanshsharma3777/EasyUrl/models"
 )
 
 func GetUrls(w http.ResponseWriter, r *http.Request) {
@@ -24,8 +25,11 @@ func GetUrls(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if len(urls) == 0 {
-		message := "No recent url found"
-		err := json.NewEncoder(w).Encode(message)
+		fmt.Println("came here in error no url found")
+		err := json.NewEncoder(w).Encode(map[string]interface{}{
+			"message": "No short URL created yet",
+			"urls":    []models.URL{},
+		})
 
 		if err != nil {
 			fmt.Println("failed to encode JSON response:", err)
