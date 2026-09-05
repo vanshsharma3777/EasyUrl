@@ -2,6 +2,7 @@ package v1
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -29,6 +30,7 @@ func Url(w http.ResponseWriter, r *http.Request) {
 
 	if ok == true {
 		w.Header().Set("Content-Type", "application/json")
+		fmt.Println("Came here exsiting url found")
 		w.WriteHeader(http.StatusAccepted)
 		json.NewEncoder(w).Encode(checkUrlExists)
 
@@ -67,12 +69,12 @@ func Url(w http.ResponseWriter, r *http.Request) {
 	}
 
 	response := map[string]interface{}{
-		"id":          url.ID,
-		"originalUrl": url.OriginalUrl,
-		"shortUrl":    url.ShortUrl,
-		"anonyousId":  url.UserAnonymousID,
-		"qrCode":      url.QRCodeUrl,
-		"msg":         "Short url created successfully",
+		"ID":          url.ID,
+		"OriginalUrl": url.OriginalUrl,
+		"ShortUrl":    url.ShortUrl,
+		"AnonyousId":  url.UserAnonymousID,
+		"QrCode":      url.QRCodeUrl,
+		"Msg":         "Short url created successfully",
 	}
 
 	w.Header().Set("Content-Type", "application/json")

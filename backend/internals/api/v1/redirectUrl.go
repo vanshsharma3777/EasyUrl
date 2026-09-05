@@ -13,16 +13,16 @@ func RedirectUrl(w http.ResponseWriter, r *http.Request) {
 	var shortCode string
 	shortCode = r.PathValue("shortCode")
 
-	shortUrl := os.Getenv("DOMAIN_NAME") + shortCode
+	shortUrl := os.Getenv("DOMAIN_NAME") + "v1/" + shortCode
 
-	var originalUrlData models.URL
-	result := db.DB.Where("short_url = ?", shortUrl).Find(&originalUrlData)
+	var OriginalUrlData models.URL
+	result := db.DB.Where("short_url = ?", shortUrl).Find(&OriginalUrlData)
 
 	if result.Error != nil {
 		fmt.Println("error is \n", result.Error)
 		http.Error(w, "Internal server error in Redirecting", http.StatusInternalServerError)
 		return
 	}
-	http.Redirect(w, r, originalUrlData.OriginalUrl, http.StatusFound)
+	http.Redirect(w, r, OriginalUrlData.OriginalUrl, http.StatusFound)
 
 }
