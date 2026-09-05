@@ -20,13 +20,6 @@ func CORS(next http.Handler) http.Handler {
 			"Access-Control-Allow-Headers",
 			"Content-Type, Authorization",
 		)
-
-		w.Header().Set(
-			"Access-Control-Allow-Credentials",
-			"true",
-		)
-
-		// Handle browser preflight request
 		if r.Method == http.MethodOptions {
 			w.WriteHeader(http.StatusNoContent)
 			return

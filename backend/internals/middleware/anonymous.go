@@ -27,6 +27,8 @@ func Anonymous(next http.HandlerFunc) http.HandlerFunc {
 				Value:    anonymousId,
 				Path:     "/",
 				HttpOnly: true,
+				Secure:   true,
+				SameSite: http.SameSiteNoneMode,
 				MaxAge:   60 * 60 * 24 * 30,
 			})
 			fmt.Println("Generated new AnonymousId", anonymousId)
